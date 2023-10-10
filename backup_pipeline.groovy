@@ -35,6 +35,7 @@ pipeline {
             steps {
                 script {
                     def timestamp = new Date().format('yyyyMMddHHmmss')
+                    echo "${timestamp}"
                     sh "${PYTHON_EXEC} behave --format=html -o ./reports/report2.html -t ${TAG}"
                 }
             }
