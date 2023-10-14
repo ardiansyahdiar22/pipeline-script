@@ -53,6 +53,7 @@ pipeline {
         always {
             // Membersihkan lingkungan atau melakukan tindakan lain yang diperlukan setelah selesai
             cleanWs()
+            sh "rm -rf ./reports/allure-results"
         }
 
         success {
