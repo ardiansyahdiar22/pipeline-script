@@ -34,19 +34,18 @@ pipeline {
         stage('Run Tests') {
             steps {
                 script {
-                    def timestamp = new Date().format('yyyyMMddHHmmss')
-                    echo "${timestamp}"
-                    sh "${PYTHON_EXEC} behave --format=html -o ./reports/report2.html -t ${TAG}"
+                    //sh "${PYTHON_EXEC} behave --format=html -o ./reports/report2.html -t ${TAG}"
+
+                    // Allure report generated
+                    sh "${PYTHON_EXEC} behave --format=allure_behave.formatter:AllureFormatter -o ./reports/allure-results -t ${TAG}"
+                    sh "allure generate ./reports/allure-results -o ./reports/allure-report"
                 }
             }
         }
         stage('Reports Test') {
             steps {
-                archiveArtifacts 'reports/report2.html'
-                // def reportFiles = findFiles(glob: 'reports/report_*.html')
-                // if (reportFiles) {
-                //     archiveArtifacts reportFiles.collect { it.getPath() }.join(',')
-                // }
+                //archiveArtifacts 'reports/report2.html'
+                archiveArtifacts 'reports/allure-report'
             }
         }
 }
